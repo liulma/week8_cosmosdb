@@ -24,7 +24,7 @@ def get_cosmos_client():
 
 # Function to load data from an API and insert into Cosmos DB
 def load_data(container):
-    for i in range(1, 3):
+    for i in range(4, 50):
         response = requests.get(f"https://dummyjson.com/products/{i}")
         
         if response.status_code == 200:
@@ -32,7 +32,7 @@ def load_data(container):
 
             # Ensure that the id is a string
             product['id'] = str(product['id'])
-            
+
             # Insert into Cosmos DB
             container.create_item(body=product)
             print(f"Inserted product {product['id']} - {product['title']}")
