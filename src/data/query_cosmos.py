@@ -39,6 +39,18 @@ def query_mean(container):
     except Exception as e:
         print(f"Error executing query: {e}")
 
+def query_products(container):
+    product_query = "SELECT c.title, c.category, c.stock, c.price FROM c WHERE c.stock > 0"
+
+    try:
+        items = list(container.query_items(query=product_query, enable_cross_partition_query=True))
+
+        for item in items:
+            print(f"Title: {item['title']}, Category: {item['category']}, Stock: {item['stock']}, Price: {item['price']}")
+
+    except Exception as e:
+        print(f"Error executing query: {e}")
+
 def query_max_min(container):
     max_query = "SELECT VALUE MAX(c.price) FROM c"
     min_query = "SELECT VALUE MIN(c.price) FROM c"
@@ -66,6 +78,7 @@ def main():
     # Load and insert data
     query_mean(container)
     query_max_min(container)
+    query_products(container)
 
 # Run the script
 if __name__ == "__main__":
